@@ -11,9 +11,9 @@ namespace Playground.Models
 
 		public ItemRepository()
 		{
-			Add(new Item { Id = Guid.NewGuid().ToString(), Text = "Item 1", Description = "This is an item description." });
-			Add(new Item { Id = Guid.NewGuid().ToString(), Text = "Item 2", Description = "This is an item description." });
-			Add(new Item { Id = Guid.NewGuid().ToString(), Text = "Item 3", Description = "This is an item description." });
+			Add(new Item { Id = Guid.NewGuid().ToString(), Text = "Item 1", Description = "This is item 1 description." });
+			Add(new Item { Id = Guid.NewGuid().ToString(), Text = "Item 2", Description = "This is item 2 description." });
+			Add(new Item { Id = Guid.NewGuid().ToString(), Text = "Item 3", Description = "This is item 3 description." });
 		}
 
 		public Item Get(string id)
