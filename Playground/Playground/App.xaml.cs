@@ -3,6 +3,9 @@ using Xamarin.Forms;
 using Playground.Services;
 using Playground.Views;
 using Xamarin.Forms.Xaml;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace Playground
@@ -27,8 +30,12 @@ namespace Playground
 
 		protected override void OnStart ()
 		{
-			// Handle when your app starts
-		}
+            // Handle when your app starts
+            AppCenter.Start("android=39060f0c-d59c-4a13-a921-4957fb4cadc1;" +
+                  "uwp={Your UWP App secret here};" +
+                  "ios={Your iOS App secret here}",
+                  typeof(Analytics), typeof(Crashes));
+        }
 
 		protected override void OnSleep ()
 		{

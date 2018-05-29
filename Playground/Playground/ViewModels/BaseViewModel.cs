@@ -7,6 +7,8 @@ using Xamarin.Forms;
 
 using Playground.Models;
 using Playground.Services;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
 
 namespace Playground.ViewModels
 {
@@ -28,6 +30,10 @@ namespace Playground.ViewModels
             set { SetProperty(ref title, value); }
         }
 
+        public BaseViewModel()
+        {
+            Analytics.TrackEvent($"{this.GetType().Name} created.");
+        }
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName]string propertyName = "",
             Action onChanged = null)
