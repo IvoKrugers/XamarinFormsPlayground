@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Playground.Controls"
+             x:Class="Playground.Views.ControlsPages"
+             Title="Testing them controls"
+             BackgroundColor="DarkGray">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!" HorizontalOptions="Center" TextColor="White"/>
+            <controls:ExtendedSwitch 
+                TintColor="LightGray" 
+                BackgroundColor="Orange" HorizontalOptions="Center"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             x:Class="Playground.Views.XamanimationPage"
+             Title="Xamanimation">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            
+            <xamanimation:FadeToAnimation x:Key="FadeToAnimation" Target="{x:Reference FadeBox}" Duration="2000" Opacity="0"/>
+            <xamanimation:FadeToAnimation x:Key="RestoreFadeToAnimation" Target="{x:Reference FadeBox}" Duration="1000" Opacity="1"/>
+
+            <xamanimation:StoryBoard x:Key="StoryBoard" Target="{x:Reference FadeBox}">
+                <xamanimation:ScaleToAnimation  Scale="2"/>
+                <xamanimation:ShakeAnimation />
+            </xamanimation:StoryBoard>
+                
+            <xamanimation:StoryBoard x:Key="StoryBoardMoving" Target="{x:Reference FadeBox}">
+                <xamanimation:ScaleToAnimation  Scale="2" Duration="0"/>
+                <xamanimation:TranslateToAnimation TranslateX="100" Duration="0"/>
+                <xamanimation:ScaleToAnimation  Scale="1"  Duration="1000"/>
+                <xamanimation:TranslateToAnimation TranslateX="0" Duration="1000"/>
+            </xamanimation:StoryBoard>
+
+            <Style TargetType="Button">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="HeightRequest" Value="34"/>
+                <Setter Property="BackgroundColor" Value="BlueViolet" />
+            </Style>
+        </ResourceDictionary>
+     </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout>
+
+            <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                <Button Text="Fade" HorizontalOptions="Start">
+                    <Button.Triggers>
+                        <EventTrigger Event="Clicked">
+                            <xamanimation:BeginAnimation Animation="{StaticResource FadeToAnimation}" />
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button Text="Restore Fade" HorizontalOptions="Start">
+                    <Button.Triggers>
+                        <EventTrigger Event="Clicked">
+                            <xamanimation:BeginAnimation Animation="{StaticResource RestoreFadeToAnimation}" />
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button Text="Storyboard" HorizontalOptions="Start">
+                    <Button.Triggers>
+                        <EventTrigger Event="Clicked">
+                            <xamanimation:BeginAnimation Animation="{StaticResource StoryBoard}" />
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                <Button Text="Moving" HorizontalOptions="Start">
+                    <Button.Triggers>
+                        <EventTrigger Event="Clicked">
+                            <xamanimation:BeginAnimation Animation="{StaticResource StoryBoardMoving}" />
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+            </StackLayout>
+
+            <Label Text="Xamanimation example!" HorizontalOptions="Center"  />
+
+            <BoxView x:Name="FadeBox"
+                     HeightRequest="120"
+                     WidthRequest="120"
+                     Color="Maroon"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="Center"/>        
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

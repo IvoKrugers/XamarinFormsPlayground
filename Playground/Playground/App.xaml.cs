@@ -14,7 +14,7 @@ namespace Playground
 	{
 		//TODO: Replace with *.azurewebsites.net url after deploying backend to Azure
         public static string AzureBackendUrl = "http://10.0.2.2:8080";
-        public static bool UseMockDataStore = false;
+        public static bool UseMockDataStore = true;
 		
 		public App ()
 		{
@@ -28,13 +28,16 @@ namespace Playground
 			MainPage = new MainPage();
 		}
 
-		protected override void OnStart ()
-		{
+        protected override void OnStart()
+        {
             // Handle when your app starts
-            AppCenter.Start("android=39060f0c-d59c-4a13-a921-4957fb4cadc1;" +
-                  "uwp={Your UWP App secret here};" +
-                  "ios={Your iOS App secret here}",
-                  typeof(Analytics), typeof(Crashes));
+            if (!UseMockDataStore)
+            {
+                AppCenter.Start("android=39060f0c-d59c-4a13-a921-4957fb4cadc1;" +
+                      "uwp={Your UWP App secret here};" +
+                      "ios={Your iOS App secret here}",
+                      typeof(Analytics), typeof(Crashes));
+            }
         }
 
 		protected override void OnSleep ()

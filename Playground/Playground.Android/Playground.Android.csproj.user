@@ -3,5 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>ivo</SelectedDevice>
     <DefaultDevice>ivo</DefaultDevice>
+    <AndroidDesignerPreferredTheme>Theme.DeviceDefault.NoActionBar.Fullscreen</AndroidDesignerPreferredTheme>
   </PropertyGroup>
 </Project>

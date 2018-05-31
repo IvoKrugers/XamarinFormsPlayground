@@ -2,8 +2,11 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:views="clr-namespace:Playground.Views"
-            x:Class="Playground.Views.MainPage">
+            x:Class="Playground.Views.MainPage"
+           >
+    
     <TabbedPage.Children>
+        
         <NavigationPage Title="Browse">
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -14,7 +17,29 @@
                 <views:ItemsPage />
             </x:Arguments>
         </NavigationPage>
-        
+
+        <NavigationPage Title="Xamanimation">
+            <NavigationPage.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="iOS" Value="tab_feed.png"/>
+                </OnPlatform>
+            </NavigationPage.Icon>
+            <x:Arguments>
+                <views:XamanimationPage />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="Controls">
+            <NavigationPage.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="iOS" Value="tab_feed.png"/>
+                </OnPlatform>
+            </NavigationPage.Icon>
+            <x:Arguments>
+                <views:ControlsPages/>
+            </x:Arguments>
+        </NavigationPage>
+
         <NavigationPage Title="About">
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -25,5 +50,6 @@
                 <views:AboutPage />
             </x:Arguments>
         </NavigationPage>
+        
     </TabbedPage.Children>
 </TabbedPage>
