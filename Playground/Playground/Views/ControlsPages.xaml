@@ -2,15 +2,94 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Playground.Controls"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
              x:Class="Playground.Views.ControlsPages"
-             Title="Testing them controls"
-             BackgroundColor="DarkGray">
+             Title="{Binding Title}"
+             BackgroundColor="Black">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <xamanimation:StoryBoard x:Key="HorizontalListStoryBoard" Target="{x:Reference HList}">
+                <!--<xamanimation:TranslateToAnimation TranslateX="400"  Duration="0"/>-->
+                <!--<xamanimation:TranslateToAnimation TranslateX="0" TranslateY="0" Duration="500" Easing="CubicIn"/>-->
+                <!--<xamanimation:BounceInAnimation Duration="500" Easing="CubicIn"/>-->
+                <xamanimation:TurnstileInAnimation  Duration="500" Easing="CubicIn"/>
+                <!--<xamanimation:TurnstileOutAnimation  Duration="500" Easing="CubicIn"/>-->
+            </xamanimation:StoryBoard>
+
+            <xamanimation:StoryBoard x:Key="TopLineStoryboard" Target="{x:Reference TopLine}">
+                <xamanimation:TranslateToAnimation TranslateX="100" Duration="0"/>
+                <xamanimation:TranslateToAnimation TranslateX="0" Duration="450" Easing="CubicIn"/>
+            </xamanimation:StoryBoard>
+
+        </ResourceDictionary>
+        
+    </ContentPage.Resources>
+    
+    <ContentPage.Triggers>
+        <EventTrigger Event="Appearing">
+            <xamanimation:BeginAnimation Animation="{StaticResource HorizontalListStoryBoard}" />
+            <xamanimation:BeginAnimation Animation="{StaticResource TopLineStoryboard}" />
+        </EventTrigger>
+    </ContentPage.Triggers>
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!" HorizontalOptions="Center" TextColor="White"/>
-            <controls:ExtendedSwitch 
-                TintColor="LightGray" 
-                BackgroundColor="Orange" HorizontalOptions="Center"/>
-        </StackLayout>
+
+        <controls:ParallaxControl ParallaxView="{x:Reference HeaderImage}">
+            <StackLayout>
+
+                <Image x:Name="HeaderImage" Source="header.png" HorizontalOptions="Fill" BackgroundColor="Yellow" Aspect="AspectFill"/>
+                
+                <Label Text="Welcome to Xamarin.Forms!" 
+                       HorizontalOptions="Center" 
+                       TextColor="White"/>
+
+                <controls:ExtendedSwitch 
+                    BorderColor="DarkRed" 
+                    OffTintColor="DarkGray"
+                    HorizontalOptions="Center"/>
+
+                <Button Text="Animate" TextColor="White" BackgroundColor="Transparent">
+                    <Button.Triggers>
+                        <EventTrigger Event="Clicked">
+                            <xamanimation:BeginAnimation Animation="{StaticResource TopLineStoryboard}" />
+                            <xamanimation:BeginAnimation Animation="{StaticResource HorizontalListStoryBoard}" />
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <BoxView x:Name="TopLine" HeightRequest="1" HorizontalOptions="Fill" BackgroundColor="DarkGray" Margin="16,0"/>
+
+                <controls:HorizontalList x:Name="HList"
+                                         HorizontalOptions="CenterAndExpand" 
+                                         VerticalOptions="Start"
+                                         ListOrientation="Horizontal" 
+                                         HeightRequest="150"    
+                                         Spacing="20"
+                                         ItemsSource="{Binding Items}" 
+                                         Margin="16,0">
+                    
+                    <controls:HorizontalList.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="{Binding Artist}" FontAttributes="Bold"  TextColor="LightGray" HorizontalOptions="Start"/>
+                                    <Label Text="{Binding Song}" FontAttributes="Italic"  TextColor="LightGray" HorizontalOptions="End"/>
+                                    <Label Text="{Binding Lyrics}"  HorizontalOptions="Fill" TextColor="LightGray" VerticalOptions="StartAndExpand"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </controls:HorizontalList.ItemTemplate>
+                </controls:HorizontalList>
+
+                <BoxView x:Name="BottomLine" HeightRequest="1" HorizontalOptions="Fill" BackgroundColor="DarkGray" Margin="16,0"/>
+
+                <BoxView HeightRequest="200" BackgroundColor="Red"/>
+                <BoxView HeightRequest="200" BackgroundColor="Yellow"/>
+                <BoxView HeightRequest="200" BackgroundColor="Red"/>
+            </StackLayout>
+        </controls:ParallaxControl>
+ 
     </ContentPage.Content>
 </ContentPage>

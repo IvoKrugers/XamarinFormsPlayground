@@ -70,7 +70,9 @@
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.1.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ContextExtentions.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Renderers\ExtendedSwitchRenderer.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -109,6 +111,9 @@
       <Project>{A3392CDF-AB63-4940-B4D1-1AC00C6C3670}</Project>
       <Name>Playground</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\header.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

@@ -1,10 +1,12 @@
 ﻿using Playground.Controls;
+using System;
 using System.ComponentModel;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(ExtendedSwitch), typeof(Playground.iOS.Renderers.ExtendedSwitchRenderer))]
+
 namespace Playground.iOS.Renderers
 {
     class ExtendedSwitchRenderer : SwitchRenderer
@@ -26,7 +28,6 @@ namespace Playground.iOS.Renderers
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-
             if (e.PropertyName.Equals(nameof(ExtendedSwitch.BorderColor)))
             {
                 UpdateBorderColor();
@@ -37,20 +38,24 @@ namespace Playground.iOS.Renderers
         {
             if (Control != null)
             {
-                //Control.OnTintColor = Color.AliceBlue.ToUIColor();//((ExtendedSwitch)Element).TintColor.ToUIColor();
-                //Control.ThumbTintColor = Color.Lime.ToUIColor();
-                if (((ExtendedSwitch)Element).BorderColor != null)
+                if (Element is ExtendedSwitch extSwitch)
                 {
-                    Control.TintColor = ((ExtendedSwitch)Element).BorderColor.ToUIColor();
-                    Control.BackgroundColor = ((ExtendedSwitch)Element).BackgroundColor.ToUIColor();
-                    Control.Layer.CornerRadius = 16.0f;
-                }
-                else
-                {
-                    ////var s = new UISwitch();
-                    ////Control.TintColor = s.TintColor;
-                    ////Control.BackgroundColor = s.BackgroundColor;
-                    ////Control.Layer.CornerRadius = s.Layer.CornerRadius;
+                    //Control.OnTintColor = Color.AliceBlue.ToUIColor();//((ExtendedSwitch)Element).TintColor.ToUIColor();
+                    //Control.ThumbTintColor = Color.Lime.ToUIColor();
+                    if (extSwitch.BorderColor != null)
+                    {
+                        Control.TintColor = extSwitch.BorderColor.ToUIColor();
+                        //Control.OnTintColor
+                        Control.BackgroundColor = extSwitch.OffTintColor.ToUIColor();
+                        Control.Layer.CornerRadius = 16.0f;
+                    }
+                    else
+                    {
+                        ////var s = new UISwitch();
+                        Control.TintColor = UIColor.Green;
+                        Control.BackgroundColor = UIColor.White;
+                        Control.Layer.CornerRadius = 0f;
+                    }
                 }
             }
         }

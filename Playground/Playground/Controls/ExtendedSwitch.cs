@@ -22,5 +22,19 @@ namespace Playground.Controls
             extSwitch.BorderColor = (Color)newValue;
         }
 
+        public static readonly BindableProperty OffTintColorProperty =
+            BindableProperty.Create(nameof(OffTintColor), typeof(Color), typeof(ExtendedSwitch), Color.Black, propertyChanged: OffTintColorChanged);
+
+        public Color OffTintColor
+        {
+            get => (Color)GetValue(OffTintColorProperty);
+            set => SetValue(OffTintColorProperty, value);
+        }
+
+        private static void OffTintColorChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var extSwitch = (ExtendedSwitch)bindable;
+            extSwitch.OffTintColor = (Color)newValue;
+        }
     }
 }
