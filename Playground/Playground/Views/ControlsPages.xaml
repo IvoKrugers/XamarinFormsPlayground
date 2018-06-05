@@ -2,10 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Playground.Controls"
+             xmlns:helpers="clr-namespace:Playground.Helpers"
+             xmlns:templates="clr-namespace:Playground.Views.Templates"
              xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
              x:Class="Playground.Views.ControlsPages"
              Title="{Binding Title}"
-             BackgroundColor="Black">
+             BackgroundColor="Black"
+             x:Name="ControlsPage">
     
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -13,15 +17,33 @@
             <xamanimation:StoryBoard x:Key="HorizontalListStoryBoard" Target="{x:Reference HList}">
                 <!--<xamanimation:TranslateToAnimation TranslateX="400"  Duration="0"/>-->
                 <!--<xamanimation:TranslateToAnimation TranslateX="0" TranslateY="0" Duration="500" Easing="CubicIn"/>-->
-                <!--<xamanimation:BounceInAnimation Duration="500" Easing="CubicIn"/>-->
-                <xamanimation:TurnstileInAnimation  Duration="500" Easing="CubicIn"/>
+                <xamanimation:BounceInAnimation Duration="500" Easing="CubicIn"/>
+                <!--<xamanimation:FadeInAnimation Duration="500" Direction="Up" Easing="CubicIn"/>-->
+                <!--<xamanimation:TurnstileInAnimation  Duration="500" Easing="CubicIn"/>-->
                 <!--<xamanimation:TurnstileOutAnimation  Duration="500" Easing="CubicIn"/>-->
             </xamanimation:StoryBoard>
 
             <xamanimation:StoryBoard x:Key="TopLineStoryboard" Target="{x:Reference TopLine}">
-                <xamanimation:TranslateToAnimation TranslateX="100" Duration="0"/>
-                <xamanimation:TranslateToAnimation TranslateX="0" Duration="450" Easing="CubicIn"/>
+                <xamanimation:TranslateToAnimation TranslateX="500" Duration="0"/>
+                <xamanimation:TranslateToAnimation TranslateX="0" Duration="450" Easing="BounceIn"/>
             </xamanimation:StoryBoard>
+
+            <helpers:ParallelStoryBoard x:Key="HList2Storyboard" Target="{x:Reference HList2}">
+                <!--<helpers:ParallelStoryBoard.PreAnimations>
+                    <xamanimation:FadeInAnimation Duration="0"/>
+                    <xamanimation:TranslateToAnimation TranslateY="0" Duration="0"/>
+                </helpers:ParallelStoryBoard.PreAnimations>-->
+
+                <helpers:ParallelStoryBoard.Animations>
+                    <xamanimation:FadeToAnimation Duration="700" Opacity="0"/>
+                    <xamanimation:TranslateToAnimation Duration="1000" TranslateY="300" Easing="SinOut"/>
+                </helpers:ParallelStoryBoard.Animations>
+
+                <helpers:ParallelStoryBoard.PostAnimations >
+                    <xamanimation:TranslateToAnimation Duration="0" TranslateY="0"/>
+                    <xamanimation:FadeToAnimation Duration="0" Opacity="1"/>
+                </helpers:ParallelStoryBoard.PostAnimations>
+            </helpers:ParallelStoryBoard>
 
         </ResourceDictionary>
         
@@ -31,6 +53,7 @@
         <EventTrigger Event="Appearing">
             <xamanimation:BeginAnimation Animation="{StaticResource HorizontalListStoryBoard}" />
             <xamanimation:BeginAnimation Animation="{StaticResource TopLineStoryboard}" />
+            <xamanimation:BeginAnimation Animation="{StaticResource HList2Storyboard}" />
         </EventTrigger>
     </ContentPage.Triggers>
     
@@ -55,6 +78,7 @@
                         <EventTrigger Event="Clicked">
                             <xamanimation:BeginAnimation Animation="{StaticResource TopLineStoryboard}" />
                             <xamanimation:BeginAnimation Animation="{StaticResource HorizontalListStoryBoard}" />
+                            <xamanimation:BeginAnimation Animation="{StaticResource HList2Storyboard}" />
                         </EventTrigger>
                     </Button.Triggers>
                 </Button>
@@ -85,9 +109,50 @@
 
                 <BoxView x:Name="BottomLine" HeightRequest="1" HorizontalOptions="Fill" BackgroundColor="DarkGray" Margin="16,0"/>
 
-                <BoxView HeightRequest="200" BackgroundColor="Red"/>
-                <BoxView HeightRequest="200" BackgroundColor="Yellow"/>
-                <BoxView HeightRequest="200" BackgroundColor="Red"/>
+                <controls:HorizontalList x:Name="HList2"
+                                         HorizontalOptions="CenterAndExpand" 
+                                         VerticalOptions="Start"
+                                         ListOrientation="Horizontal" 
+                                         HeightRequest="150"    
+                                         Spacing="20"
+                                         ItemsSource="{Binding Items, Mode=OneWay}" 
+                                         Margin="16,0">
+
+                    <controls:HorizontalList.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="{Binding Artist}" FontAttributes="Bold"  TextColor="LightGray" HorizontalOptions="Start"/>
+                                    <Label Text="{Binding Song}" FontAttributes="Italic"  TextColor="LightGray" HorizontalOptions="End"/>
+                                    <Label Text="{Binding Lyrics}"  HorizontalOptions="Fill" TextColor="LightGray" VerticalOptions="StartAndExpand"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </controls:HorizontalList.ItemTemplate>
+                </controls:HorizontalList>
+
+                <BoxView x:Name="BottomLine2" HeightRequest="1" HorizontalOptions="Fill" BackgroundColor="DarkGray" Margin="16,0"/>
+
+                <carousel:CarouselViewControl 
+                        x:Name="Carousel"
+                        Orientation="Horizontal" 
+                        InterPageSpacing="0" 
+                        ShowIndicators="True"
+                        ShowArrows="True"
+                    
+                        CurrentPageIndicatorTintColor="White"
+                        ItemsSource="{Binding Items, Mode=OneWay}"
+                        HorizontalOptions="CenterAndExpand"
+                    Margin="16,0"
+                       HeightRequest="150">
+                    <carousel:CarouselViewControl.ItemTemplate>
+                        <DataTemplate>
+                            <templates:CarouselItem 
+                                    TapCommand="{Binding BindingContext.CarouselItemTappedCommand, Source={x:Reference ControlsPage}}" />
+                        </DataTemplate>
+                    </carousel:CarouselViewControl.ItemTemplate>
+                </carousel:CarouselViewControl>
+                <BoxView BackgroundColor="DarkKhaki" HeightRequest="500"/>
             </StackLayout>
         </controls:ParallaxControl>
  

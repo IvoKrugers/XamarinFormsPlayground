@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Playground.ViewModels
 {
@@ -15,6 +18,12 @@ namespace Playground.ViewModels
         }
 
         public ObservableCollection<Item> Items { get; private set; }
+
+        public ICommand CarouselItemTappedCommand { get; } 
+            = new Command(() =>
+        {
+            Debug.WriteLine("Item Clicked");
+        });
 
         public ControlsViewModel()
         {

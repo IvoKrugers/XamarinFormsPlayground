@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Playground.Views.Templates.CarouselItem"
+             x:Name="Self">
+    <ContentView.Content>
+        <StackLayout Padding="20,0">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer 
+                        Command="{Binding TapCommand, Source={x:Reference Self}}" />
+            </StackLayout.GestureRecognizers>
+            <Label Text="{Binding Artist}" FontAttributes="Bold"  TextColor="LightGray" HorizontalOptions="Start"/>
+            <Label Text="{Binding Song}" FontAttributes="Italic"  TextColor="LightGray" HorizontalOptions="End"/>
+            <Label Text="{Binding Lyrics}"  HorizontalOptions="Fill" TextColor="LightGray" VerticalOptions="StartAndExpand"/>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

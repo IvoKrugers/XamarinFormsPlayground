@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Microsoft.AppCenter.Push;
 using Microsoft.AppCenter;
+using CarouselView.FormsPlugin.Android;
 
 namespace Playground.Droid
 {
@@ -22,7 +23,9 @@ namespace Playground.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            
+
+            CarouselViewRenderer.Init();
+
             Push.SetSenderId("739468080346");
             AppCenter.Start("39060f0c-d59c-4a13-a921-4957fb4cadc1", typeof(Push));
 
